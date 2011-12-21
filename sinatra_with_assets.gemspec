@@ -8,6 +8,7 @@ Gem::Specification.new do |s|
   s.authors     = ["Jesse Trimble"]
   s.email       = ["jlowelltrim@gmail.com"]
   s.homepage    = ""
+  s.summary = %q{Generator for sinatra apps pre-wired for coffeescript, scss, and slim templates.}
   s.description = %q{Generator for sinatra apps pre-wired for coffeescript, scss, and slim templates.}
 
   s.rubyforge_project = "sinatra_with_assets"
