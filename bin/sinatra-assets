@@ -39,6 +39,14 @@ class SinatraAssets < Thor
     end
 
     say_status 'git', `git init #{app_name}`, true
+
+    say <<-GETSTARTED, Thor::Shell::Color::CYAN
+
+    ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+    Now, `cd` into your new app and run `./server` to boot up.
+    ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+
+    GETSTARTED
   end
 
   private
