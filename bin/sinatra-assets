@@ -34,7 +34,7 @@ class SinatraAssets < Thor
     if yes?("Use Twitter Boostrap?")
       bootstrap_endpoint = 'https://raw.github.com/twitter/bootstrap/master/bootstrap.min.css'
       say_status 'curl', bootstrap_endpoint, true
-      system("curl #{bootstrap_endpoint} > #{File.join(app_name, 'app/assets/stylesheets/bootstrap.min.css')}")
+      system("curl -s #{bootstrap_endpoint} > #{File.join(app_name, 'app/assets/stylesheets/bootstrap.min.css')}")
       prepend_to_file 'app/assets/stylesheets/app.css.scss', "//= require bootstrap.min\n\n"
     end
 
