@@ -3,8 +3,6 @@ require 'sprockets'
 require 'slim'
 
 class <%= constant_name %> < Sinatra::Base
-  enable :logging
-
   get '/' do
     slim :index
   end
