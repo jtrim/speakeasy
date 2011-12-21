@@ -2,7 +2,6 @@
 # encoding: UTF-8
 
 require 'thor'
-require 'sinatra_with_assets'
 
 class SinatraAssets < Thor
   include Thor::Actions
