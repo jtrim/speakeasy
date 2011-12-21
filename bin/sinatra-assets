@@ -1,0 +1,56 @@
+#!/usr/bin/env ruby
+
+require 'thor'
+require 'sinatra_with_assets'
+
+class SinatraAssets < Thor
+  include Thor::Actions
+  attr_accessor :app_name
+  attr_accessor :constant_name
+
+  desc 'new [APP_NAME]', 'Make a new sinatra app with assets'
+  def new(app_name)
+    @app_name = app_name
+    @constant_name = constant_name_from(File.split(app_name)[1])
+
+    setup
+
+    copy_file 'README.markdown'
+    copy_file 'Gemfile'
+
+    copy_file 'server'
+    chmod "server", 0755
+
+    template 'config.ru'
+    template 'rvmrc', '.rvmrc'
+
+    directory 'app'
+    directory 'public'
+
+    copy_file 'views/index.slim'
+    template 'views/layout.slim'
+
+    if yes?("Use Twitter Boostrap?")
+      bootstrap_endpoint = 'https://raw.github.com/twitter/bootstrap/master/bootstrap.min.css'
+      say_status 'curl', bootstrap_endpoint, true
+      system("curl #{bootstrap_endpoint} > #{File.join(app_name, 'app/assets/stylesheets/bootstrap.min.css')}")
+      prepend_to_file 'app/assets/stylesheets/app.css.scss', "//= require bootstrap.min\n\n"
+    end
+
+    say_status 'git', `git init #{app_name}`, true
+  end
+
+  private
+
+  def setup
+    source_paths << File.expand_path(File.join(__FILE__, '../../lib/templates'))
+    self.destination_root = File.expand_path(File.join('.', @app_name))
+  end
+
+  def constant_name_from(name)
+    name.split("_").map { |word| letters = word.split(//); letters.unshift(letters.shift.upcase); letters.join }.join
+  end
+
+end
+
+SinatraAssets.start
