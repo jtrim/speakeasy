@@ -56,7 +56,7 @@ class SinatraAssets < Thor
   end
 
   def constant_name_from(name)
-    name.split("_").map { |word| letters = word.split(//); letters.unshift(letters.shift.upcase); letters.join }.join
+    name.split(/[\-_]/).map { |word| letters = word.split(//); letters.unshift(letters.shift.upcase); letters.join }.join
   end
 
 end
