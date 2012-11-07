@@ -3,7 +3,7 @@
 
 require 'thor'
 
-class SinatraAssets < Thor
+class Speakeasy < Thor
   include Thor::Actions
   attr_accessor :app_name
   attr_accessor :constant_name
@@ -22,7 +22,6 @@ class SinatraAssets < Thor
     chmod "server", 0755
 
     template 'config.ru'
-    template 'rvmrc', '.rvmrc'
 
     directory 'app'
     directory 'public'
@@ -30,19 +29,17 @@ class SinatraAssets < Thor
     copy_file 'views/index.slim'
     template 'views/layout.slim'
 
-    if yes?("Use Twitter Boostrap?")
-      bootstrap_endpoint = 'https://raw.github.com/twitter/bootstrap/master/bootstrap.min.css'
-      say_status 'curl', bootstrap_endpoint, true
-      system("curl -s #{bootstrap_endpoint} > #{File.join(app_name, 'app/assets/stylesheets/bootstrap.min.css')}")
-      prepend_to_file 'app/assets/stylesheets/app.css.scss', "//= require bootstrap.min\n\n"
-    end
-
     say_status 'git', `git init #{app_name}`, true
 
     say <<-GETSTARTED, Thor::Shell::Color::CYAN
 
     ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
-    Now, `cd` into your new app and run `./server` to boot up.
+    Next steps:
+
+    - run `cd #{app_name}`
+    - run `bundle install`
+    - run `./server`
+    - navigate to http://localhost:3000
     ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
 
     GETSTARTED
@@ -61,4 +58,4 @@ class SinatraAssets < Thor
 
 end
 
-SinatraAssets.start
+Speakeasy.start
